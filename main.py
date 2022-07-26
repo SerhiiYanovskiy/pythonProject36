@@ -5,6 +5,7 @@ from functools import partial
 import time
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+import pyautogui
 
 
 list_tasks = ["Follow twitter", "Registration button"]
@@ -198,6 +199,8 @@ def show_message(message_twiter_1, message_twiter_2, message_twiter_3, message_t
 
 
 def start_webdriwer():
+    with open("eroor_register.txt", "a") as file:
+        file.write(f"1")
     for task in premint:
         task = str(task).split(":LiNK:")[0]
         if task == "registration":
@@ -207,7 +210,7 @@ def start_webdriwer():
         else:
             print(f"connect to  {task}")
 
-        for profile in choise_profile_list:
+    for profile in choise_profile_list:
             for task in premint:
                 link = str(task).split(":LiNK:")[1]
                 task = str(task).split(":LiNK:")[0]
@@ -215,10 +218,19 @@ def start_webdriwer():
                     options = webdriver.ChromeOptions()
                     options.add_argument("--allow-profiles-outside-user-dir")
                     options.add_argument(f"--profile-directory={profile}")
+                    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+                    options.add_experimental_option('useAutomationExtension', False)
+                    options.add_argument("--disable-blink-features=AutomationControlled")
+                    options.add_argument("window-size=1280,800")
+                    options.add_argument(
+                        "user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36")
                     options.add_argument(f"user-data-dir={PROFILE_DIR}")
                     browser = webdriver.Chrome(executable_path=CHROME_DRRIVER_PATH, options=options)
                     print(f"Webdriver use {profile}")
                     print(f"connect to  {task}, {link}")
+                    browser.get("chrome://settings/")
+                    time.sleep(1)
+                    pyautogui.hotkey('ctrl', 'shift', '0')
                     time.sleep(1)
                     browser.get(link)
                     time.sleep(1)
@@ -227,11 +239,15 @@ def start_webdriwer():
                                              value="/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/div[2]/div/div[1]/div").click()
                     except:
                         with open("eroor_twitter.txt", "a") as file:
-                            file.write(link)
+                            file.write(f"{profile}, {link}\n")
+                        pyautogui.hotkey('ctrl', 'shift', '1')
+                        browser.quit()
                         continue
-                    time.sleep(3)
+                    pyautogui.hotkey('ctrl', 'shift', '1')
+                    time.sleep(1)
+                    browser.quit()
 
-        for profile in choise_profile_list:
+    for profile in choise_profile_list:
             for task in premint:
                 link = str(task).split(":LiNK:")[1]
                 task = str(task).split(":LiNK:")[0]
@@ -243,16 +259,19 @@ def start_webdriwer():
                     browser = webdriver.Chrome(executable_path=CHROME_DRRIVER_PATH, options=options)
                     print(f"Webdriver use {profile}")
                     print(f"connect to  {task}, {link}")
+
                     time.sleep(1)
                     browser.get(link)
-                    time.sleep(1)
+                    time.sleep(2)
 
                     browser.find_element(by=By.XPATH,
                                          value="/html/body/div/div/div/div/div/section[2]/div/div/div[1]/div[2]/div[5]/span/a").click()
                     time.sleep(2)
                     print("continue")
 
-        for profile in choise_profile_list:
+    for profile in choise_profile_list:
+            with open("eroor_register.txt", "a") as file:
+                file.write(f"1")
             for task in premint:
                 link = str(task).split(":LiNK:")[1]
                 task = str(task).split(":LiNK:")[0]
@@ -267,24 +286,33 @@ def start_webdriwer():
                         time.sleep(1)
                         browser.get(link)
                         time.sleep(1)
-                        browser.find_element(by=By.XPATH, value=(
-                                "/html/body/div[1]/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[8]/div/button"))
+                        try:
+                            browser.find_element(by=By.XPATH, value=
+                                    "/html/body/div/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[6]/div/button").click()
+                            time.sleep(2)
+                            try:
+                                d = browser.find_element(by=By.XPATH, value="/html/body/div/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[2]/div/text()")
+                                if "in your wallet to join this list" in str(d):
+                                    with open("eroor_register.txt", "a") as file:
+                                        file.write(f"{profile}, {link}, You need at least  ETH in your wallet to join this list\n" )
+                            except:
+                                browser.quit()
+                                continue
+                        except:
+                            with open("eroor_register.txt", "a") as file:
+                                file.write(f"{profile}, {link}" "you need register twiter or discord\n")
+
                         time.sleep(1)
+                        browser.quit()
                         print("continue")
 
 
-print("all tasks continue")
+    print("all tasks continue")
 get_acount()
 run_win_1(list_profile)
-print(list_profile)
 
-#https://twitter.com/shellzorb
-#https://twitter.com/Origo_NFT
-#https://twitter.com/MetaOasisDAO
-#https://twitter.com/Cap3Collective
-#https://twitter.com/Universe_BNB
-#https://twitter.com/neoapollonft
-#https://twitter.com/fknlegendz
+
+
 
 
 
