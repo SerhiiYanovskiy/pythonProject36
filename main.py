@@ -21,7 +21,7 @@ premint = []
 
 with open("config.txt", "r") as file:
     config = file.read()
-    config = config.split(":")
+    config = config.split("=")
 
 
 PROFILE_DIR = config[0]
@@ -222,17 +222,14 @@ def start_webdriwer():
                     time.sleep(1)
                     browser.get(link)
                     time.sleep(1)
-                    browser.find_element(by=By.XPATH,
-                                         value="/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/div[2]/div/div[1]/div").click()
-                    time.sleep(1)
-                    browser.find_element(by=By.XPATH, value=(
-                        "/html/body/div[1]/div[2]/div/div[1]/div/div[2]/div/div/div/section/div/button"))
-                    time.sleep(1)
-                    browser.find_element(by=By.XPATH,
-                                         value="/html/body/div[1]/div[2]/div/div[1]/div/div/div/section/div/button")
-                    time.sleep(1)
-                    browser.quit()
-                    print("continue")
+                    try:
+                        browser.find_element(by=By.XPATH,
+                                             value="/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/div[2]/div/div[1]/div").click()
+                    except:
+                        with open("eroor_twitter.txt", "a") as file:
+                            file.write(link)
+                        continue
+                    time.sleep(3)
 
         for profile in choise_profile_list:
             for task in premint:
@@ -249,6 +246,7 @@ def start_webdriwer():
                     time.sleep(1)
                     browser.get(link)
                     time.sleep(1)
+
                     browser.find_element(by=By.XPATH,
                                          value="/html/body/div/div/div/div/div/section[2]/div/div/div[1]/div[2]/div[5]/span/a").click()
                     time.sleep(2)
@@ -270,7 +268,7 @@ def start_webdriwer():
                         browser.get(link)
                         time.sleep(1)
                         browser.find_element(by=By.XPATH, value=(
-                            "/html/body/div[1]/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[8]/div/button"))
+                                "/html/body/div[1]/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[8]/div/button"))
                         time.sleep(1)
                         print("continue")
 
@@ -279,6 +277,14 @@ print("all tasks continue")
 get_acount()
 run_win_1(list_profile)
 print(list_profile)
+
+#https://twitter.com/shellzorb
+#https://twitter.com/Origo_NFT
+#https://twitter.com/MetaOasisDAO
+#https://twitter.com/Cap3Collective
+#https://twitter.com/Universe_BNB
+#https://twitter.com/neoapollonft
+#https://twitter.com/fknlegendz
 
 
 

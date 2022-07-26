@@ -1,0 +1,1 @@
+/home/serhii/.config/google-chrome/=/home/serhii/PycharmProjects/pythonProject36/chromedriver
