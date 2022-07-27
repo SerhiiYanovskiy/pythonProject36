@@ -228,8 +228,9 @@ def start_webdriwer():
                     browser = webdriver.Chrome(executable_path=CHROME_DRRIVER_PATH, options=options)
                     print(f"Webdriver use {profile}")
                     print(f"connect to  {task}, {link}")
+                    time.sleep(2)
                     browser.get("chrome://settings/")
-                    time.sleep(1)
+                    time.sleep(2)
                     pyautogui.hotkey('ctrl', 'shift', '0')
                     time.sleep(1)
                     browser.get(link)
@@ -259,11 +260,9 @@ def start_webdriwer():
                     browser = webdriver.Chrome(executable_path=CHROME_DRRIVER_PATH, options=options)
                     print(f"Webdriver use {profile}")
                     print(f"connect to  {task}, {link}")
-
                     time.sleep(1)
                     browser.get(link)
                     time.sleep(2)
-
                     browser.find_element(by=By.XPATH,
                                          value="/html/body/div/div/div/div/div/section[2]/div/div/div[1]/div[2]/div[5]/span/a").click()
                     time.sleep(2)
@@ -283,13 +282,13 @@ def start_webdriwer():
                         browser = webdriver.Chrome(executable_path=CHROME_DRRIVER_PATH, options=options)
                         print(f"Webdriver use {profile}")
                         print(f"connect to  {task}, {link}")
-                        time.sleep(1)
+                        time.sleep(3)
                         browser.get(link)
                         time.sleep(1)
                         try:
                             browser.find_element(by=By.XPATH, value=
                                     "/html/body/div/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[6]/div/button").click()
-                            time.sleep(2)
+                            time.sleep(3)
                             try:
                                 d = browser.find_element(by=By.XPATH, value="/html/body/div/div/div/div/div/section[2]/div/div/div[2]/form/div/div[2]/div[2]/div/text()")
                                 if "in your wallet to join this list" in str(d):
